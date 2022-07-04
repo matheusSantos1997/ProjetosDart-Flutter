@@ -1,0 +1,14 @@
+após baixar o arquivo zipado, extraia e jogue dentro de c:/src
+
+depois salve nas variaveis de ambiente do windows o c:/src/flutter/bin
+
+criando um projeto no flutter - flutter create primeiro_projeto
+vizualizando se existe emuladores instalados - flutter emulators
+vizualizando o id dos emuladores - flutter devices
+executando um app em flutter - flutter run -d nomedoemulador
+R - reflesh no emulador
+
+flutter and bloc
+
+codewars
+
