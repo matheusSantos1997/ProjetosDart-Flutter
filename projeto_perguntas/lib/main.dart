@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print, sort_child_properties_last, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
+import './resultado.dart';
 import './questao.dart';
 import './resposta.dart';
 
@@ -18,37 +19,41 @@ class PerguntaApp extends StatefulWidget {
 }
 
 class _PerguntaAppState extends State<PerguntaApp> {
-  var _perguntaSelecionada = 0;
+  int _perguntaSelecionada = 0;
 
-  String resposta1 = 'Resposta 1';
-  String resposta2 = 'Resposta 2';
-  String resposta3 = 'Resposta 3';
+  final List<Map<String, Object>> _perguntas = const [
+    {
+      'texto': 'Qual é a sua cor favorita ?',
+      'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco'],
+    },
+    {
+      'texto': 'Qual é o seu animal favorito ?',
+      'respostas': ['Coelho', 'Cachorro', 'Gato', 'Hamster'],
+    },
+    {
+      'texto': 'Qual é o seu instrutor favorito ?',
+      'respostas': ['Vinicius', 'Joao', 'Leo', 'Bonieky'],
+    }
+  ];
 
   void _responder() {
-    setState(() {
-      _perguntaSelecionada++;
-    });
+    if (temPerguntaSelecionada) {
+      setState(() {
+        _perguntaSelecionada++;
+      });
+    }
+    // print(_perguntaSelecionada);
+  }
+
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> _perguntas = [
-      {
-        'texto': 'Qual é a sua cor favorita ?',
-        'respostas': ['Preto', 'Vermelho', 'Verde', 'Branco'],
-      },
-      {
-        'texto': 'Qual é o seu animal favorito ?',
-        'respostas': ['Coelho', 'Cachorro', 'Gato', 'Hamster'],
-      },
-      {
-        'texto': 'Qual é o seu instrutor favorito ?',
-        'respostas': ['Maria', 'Joao', 'Leo', 'Bonieky'],
-      }
-    ];
-
-    List<String> respostas =
-        _perguntas[_perguntaSelecionada].cast()['respostas'];
+    List<String> respostas = temPerguntaSelecionada
+        ? _perguntas[_perguntaSelecionada].cast()['respostas']
+        : [];
 
     // List<Widget> widgets;
 
@@ -62,13 +67,18 @@ class _PerguntaAppState extends State<PerguntaApp> {
             appBar: AppBar(
               title: Text('Menu Teste'),
             ),
-            body: Column(
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                // children pode receber varios Widgets
-                Questao(_perguntas[_perguntaSelecionada]['texto'].toString()),
-                ...respostas.map((t) => Resposta(t, _responder)).toList(),
-              ],
-            )));
+            body: temPerguntaSelecionada
+                ? Column(
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      // children pode receber varios Widgets
+                      Questao(
+                          _perguntas[_perguntaSelecionada]['texto'].toString()),
+                      ...respostas
+                          .map((r) => Resposta(r, _responder))
+                          .toList(), // converte a lista de strings em lista de widget
+                    ],
+                  )
+                : Resultado()));
   }
 }

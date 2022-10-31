@@ -12,7 +12,7 @@ class Resposta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width: double.infinity, // ocupa a tela de ponta a ponta
       child: ElevatedButton(
           onPressed: quandoSelecionado,
           child: Text(texto),
