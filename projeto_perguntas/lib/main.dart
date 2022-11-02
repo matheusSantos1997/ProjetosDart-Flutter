@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import './resultado.dart';
-import './questao.dart';
-import './resposta.dart';
+import './questionario.dart';
 
 main() {
   runApp(PerguntaApp());
@@ -51,10 +50,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> respostas = temPerguntaSelecionada
-        ? _perguntas[_perguntaSelecionada].cast()['respostas']
-        : [];
-
     // List<Widget> widgets;
 
     // for (String textoResp in respostas) {
@@ -65,20 +60,13 @@ class _PerguntaAppState extends State<PerguntaApp> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
-              title: Text('Menu Teste'),
+              title: Text('Perguntas'),
             ),
             body: temPerguntaSelecionada
-                ? Column(
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      // children pode receber varios Widgets
-                      Questao(
-                          _perguntas[_perguntaSelecionada]['texto'].toString()),
-                      ...respostas
-                          .map((r) => Resposta(r, _responder))
-                          .toList(), // converte a lista de strings em lista de widget
-                    ],
-                  )
+                ? Questionario(
+                    perguntas: _perguntas,
+                    perguntaSelecionada: _perguntaSelecionada,
+                    quandoResponder: _responder)
                 : Resultado()));
   }
 }
