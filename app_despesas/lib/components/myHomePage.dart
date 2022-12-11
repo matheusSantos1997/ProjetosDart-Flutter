@@ -1,4 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace, sort_child_properties_last, file_names, unused_element
+import 'package:app_despesas/components/chart.dart';
 import 'package:app_despesas/components/transaction_list.dart';
 import 'package:flutter/material.dart';
 import 'package:app_despesas/components/transaction_form.dart';
@@ -14,18 +15,45 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    /* Transaction(
-        id: 't1',
-        title: 'Novo Tênis de Corrida',
-        value: 310.76,
-        date: DateTime.now()),
+    Transaction(
+      id: 't1',
+      title: 'Conta Antiga',
+      value: 400.00,
+      date: DateTime.now().subtract(const Duration(days: 33)),
+    ),
     Transaction(
       id: 't2',
+      title: 'Novo Tênis de Corrida',
+      value: 310.76,
+      date: DateTime.now().subtract(const Duration(days: 3)),
+    ),
+    Transaction(
+      id: 't3',
       title: 'Conta de Luz',
       value: 211.30,
+      date: DateTime.now().subtract(const Duration(days: 4)),
+    ),
+    Transaction(
+      id: 't4',
+      title: 'Cartao de Crédito',
+      value: 100211.30,
       date: DateTime.now(),
-    ), */
+    ),
+    Transaction(
+      id: 't4',
+      title: '11.30',
+      value: 211.30,
+      date: DateTime.now(),
+    ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(
+        const Duration(days: 7),
+      ));
+    }).toList();
+  }
 
   _addTransaction(String title, dynamic value) {
     // adiciona uma nova transaçao
@@ -47,10 +75,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return TransactionForm(_addTransaction);
-        });
+      context: context,
+      builder: (_) {
+        return TransactionForm(_addTransaction);
+      },
+    );
   }
 
   @override
@@ -74,14 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child:
             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Container(
-            width: double.infinity,
-            child: Card(
-              color: Theme.of(context).colorScheme.primary,
-              child: const Text("Gráfico"),
-              elevation: 5,
-            ),
-          ),
+          Chart(_recentTransactions),
           TransactionList(_transactions),
         ]),
       ),

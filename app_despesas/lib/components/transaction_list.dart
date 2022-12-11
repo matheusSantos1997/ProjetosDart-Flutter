@@ -1,5 +1,4 @@
 // ignore_for_file: sized_box_for_whitespace
-
 import 'package:app_despesas/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -82,41 +81,29 @@ class TransactionList extends StatelessWidget {
                 final tr = transactions[index];
 
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            width: 2,
-                          )),
-                          padding: const EdgeInsets.all(10),
+                  elevation: 5,
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
                           child: Text(
-                            'R\$ ${tr.value.toStringAsFixed(2).replaceAll('.', ',')}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          )),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            tr.title,
-                            style: Theme.of(context).textTheme.titleLarge,
-                            // style: const TextStyle(
-                            //     fontSize: 16, fontWeight: FontWeight.bold),
+                            "R\$${tr.value.toStringAsFixed(2).replaceAll('.', ',')}",
                           ),
-                          Text(
-                            DateFormat('d MMM y').format(tr.date),
-                            style: TextStyle(color: Colors.grey[700]),
-                          ),
-                        ],
-                      )
-                    ],
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      tr.title,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    subtitle: Text(
+                      DateFormat('d MMM y').format(tr.date),
+                    ),
                   ),
                 );
               },
