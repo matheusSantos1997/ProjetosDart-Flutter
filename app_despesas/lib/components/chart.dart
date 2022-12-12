@@ -60,8 +60,10 @@ class Chart extends StatelessWidget {
                 child: ChartBar(
                   tr['day'].toString(),
                   double.parse(tr['value'].toString()),
-                  double.parse(tr['value'].toString()) /
-                      _weekTotalValue, // valor / totalSemana
+                  _weekTotalValue == 0
+                      ? 0
+                      : double.parse(tr['value'].toString()) /
+                          _weekTotalValue, // valor / totalSemana
                 ),
               );
             }).toList()

@@ -4,7 +4,7 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmit;
+  final void Function(String, double, DateTime) onSubmit;
 
   const TransactionForm(this.onSubmit, {super.key});
 
@@ -20,7 +20,7 @@ class _TransactionFormState extends State<TransactionForm> {
       MoneyMaskedTextController(
           thousandSeparator: '.', decimalSeparator: ',', precision: 2);
 
-  DateTime? _selectedDate = null;
+  DateTime? _selectedDate = DateTime.now();
 
   _submitForm() {
     final title = _titleController.text;
@@ -28,11 +28,11 @@ class _TransactionFormState extends State<TransactionForm> {
             _moneyMaskedTextControllerValue.text.replaceAll(",", ".")) ??
         0.0;
 
-    if (title.isEmpty || value <= 0) {
+    if (title.isEmpty || value <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.onSubmit(title, value);
+    widget.onSubmit(title, value, _selectedDate!);
   }
 
   _showDatePicker() {

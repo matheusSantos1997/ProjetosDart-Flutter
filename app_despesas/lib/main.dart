@@ -38,6 +38,7 @@ class ExpensesApp extends StatelessWidget {
                 ))
                 .headline6),
       ),
+      // traduçao do datePicker
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
